@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./LoginSingUp.css";
+import "./StyleSL.css";
 import user_icon from "../Assets/person.png";
 import password_icon from "../Assets/password.png";
 import email_icon from "../Assets/email.png";
@@ -9,12 +9,27 @@ import axios from "axios";
 const LoginSingUp = () => {
   const [action, setAction] = useState("Sing Up");
 
+  // register
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
   });
+
+  // Login
+
+  const [loginForm, setLoginForm] = useState({
+    emailLogin: "",
+    passwordLogin: "",
+  });
+  // Login
+  const handleChangeLogin = (login) => {
+    setFormData({ ...loginForm, [login.target.name]: login.target.value });
+  };
+
+  //REGISTER
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -26,7 +41,20 @@ const LoginSingUp = () => {
       alert("User registered successfully");
     } catch (error) {
       console.error("Error:", error);
-      alert("An error occurred");
+      alert("An error occurred IN REGISTER");
+    }
+  };
+  // Login
+  const handleSubmitLogin = async () => {
+    try {
+      await axios.post(
+        "http://localhost:8080/api/v1/auth/authenticate",
+        loginForm
+      );
+      alert("User LOGIN successfully");
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred in lOGIN");
     }
   };
 
@@ -52,7 +80,7 @@ const LoginSingUp = () => {
           </div>
         )}
         <div className="input">
-          <img src={email_icon} alt="" />
+          <img src={user_icon} alt="" />
           <input
             type="text"
             placeholder="surname"
@@ -61,14 +89,17 @@ const LoginSingUp = () => {
             onChange={handleChange}
           />
         </div>
+
         <div className="input">
           <img src={email_icon} alt="" />
           <input
             type="email"
             placeholder="Email"
             name="email"
-            value={formData.email}
-            onChange={handleChange}
+            //value={formData.email}
+            //onChange={handleChange}
+            value={loginForm.emailLogin}
+            onChange={handleChangeLogin}
           />
         </div>
         <div className="input">
@@ -77,8 +108,10 @@ const LoginSingUp = () => {
             type="password"
             placeholder="Password"
             name="password"
-            value={formData.password}
-            onChange={handleChange}
+            //value={formData.password}
+            //onChange={handleChange}
+            value={loginForm.passwordLogin}
+            onChange={handleChangeLogin}
           />
         </div>
       </div>
@@ -101,10 +134,12 @@ const LoginSingUp = () => {
         >
           Submit up
         </div>
+
         <div
           className={action === "Sign Up" ? "submit gray" : "submit"}
           onClick={() => {
-            setAction("Login");
+            setLoginForm("Login");
+            handleSubmitLogin();
           }}
         >
           Login
