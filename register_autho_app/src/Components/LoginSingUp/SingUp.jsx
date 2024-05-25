@@ -3,10 +3,9 @@ import "./StyleSL.css";
 import user_icon from "../Assets/person.png";
 import password_icon from "../Assets/password.png";
 import email_icon from "../Assets/email.png";
-
 import axios from "axios";
 
-const SingUp = () => {
+const SignUp = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -20,10 +19,8 @@ const SingUp = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // online https://www.geeksforgeeks.org/spring-security-login-page-with-react/
   const handleSubmit = async () => {
     try {
-      // Check for empty fields
       if (
         !formData.firstName ||
         !formData.lastName ||
@@ -36,32 +33,35 @@ const SingUp = () => {
       }
 
       if (formData.password !== formData.confirmPassword) {
-        alert("asswords do not match");
+        alert("Passwords do not match");
+        return;
       }
 
       const response = await axios.post(
         "http://localhost:8080/api/v1/auth/register",
         formData
       );
-      // Handle successful signup
+
       console.log(response.data);
       alert("User registered successfully");
     } catch (error) {
-      // Handle signup error
       console.error(
         "Signup failed:",
         error.response ? error.response.data : error.message
       );
-
       alert("An error occurred");
     }
   };
 
   return (
     <div className="container">
+      <div className="header">
+        <div className="text">Sign up</div>
+        <div className="underline"></div>
+      </div>
       <div className="inputs">
         <div className="input">
-          <img src={user_icon} alt="" />
+          <img src={user_icon} alt="User Icon" />
           <input
             type="text"
             placeholder="First Name"
@@ -71,7 +71,7 @@ const SingUp = () => {
           />
         </div>
         <div className="input">
-          <img src={user_icon} alt="" />
+          <img src={user_icon} alt="User Icon" />
           <input
             type="text"
             placeholder="Last Name"
@@ -80,9 +80,8 @@ const SingUp = () => {
             onChange={handleChange}
           />
         </div>
-    
         <div className="input">
-          <img src={email_icon} alt="" />
+          <img src={email_icon} alt="Email Icon" />
           <input
             type="email"
             placeholder="Email"
@@ -92,7 +91,7 @@ const SingUp = () => {
           />
         </div>
         <div className="input">
-          <img src={password_icon} alt="" />
+          <img src={password_icon} alt="Password Icon" />
           <input
             type="password"
             placeholder="Password"
@@ -102,19 +101,21 @@ const SingUp = () => {
           />
         </div>
         <div className="input">
-          <img src={password_icon} alt="" />
+          <img src={password_icon} alt="Password Icon" />
           <input
             type="password"
-            placeholder="confirmPassword"
+            placeholder="Confirm Password"
             name="confirmPassword"
             value={formData.confirmPassword}
             onChange={handleChange}
           />
         </div>
       </div>
-      <button  onClick={handleSubmit}>Register</button>
+      <div className="submit-container">
+        <button className="submit" onClick={handleSubmit}>Register</button>
+      </div>
     </div>
   );
 };
 
-export default SingUp;
+export default SignUp;

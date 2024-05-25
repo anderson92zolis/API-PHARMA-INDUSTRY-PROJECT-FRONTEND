@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./StyleSL.css";
-
 import password_icon from "../Assets/password.png";
 import email_icon from "../Assets/email.png";
 
@@ -45,9 +44,13 @@ const Login = () => {
 
   return (
     <div className="container">
+      <div className="header">
+        <div className="text">Login</div>
+        <div className="underline"></div>
+      </div>
       <div className="inputs">
         <div className="input">
-          <img src={email_icon} alt="" />
+          <img src={email_icon} alt="Email Icon" />
           <input
             type="email"
             placeholder="Email"
@@ -57,7 +60,7 @@ const Login = () => {
           />
         </div>
         <div className="input">
-          <img src={password_icon} alt="" />
+          <img src={password_icon} alt="Password Icon" />
           <input
             type="password"
             placeholder="Password"
@@ -67,7 +70,12 @@ const Login = () => {
           />
         </div>
       </div>
-      <button onClick={handleSubmit}>Login</button>
+      <div className="forgot-password">
+        Forgot your password? <span>Click here</span>
+      </div>
+      <div className="submit-container">
+        <button className="submit" onClick={handleSubmit}>Login</button>
+      </div>
     </div>
   );
 };
