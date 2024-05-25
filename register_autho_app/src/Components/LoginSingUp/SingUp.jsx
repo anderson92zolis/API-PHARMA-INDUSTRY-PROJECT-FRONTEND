@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom'; // Import useNavigate hook 
 import "./StyleSL.css";
 import user_icon from "../Assets/person.png";
 import password_icon from "../Assets/password.png";
@@ -12,14 +13,16 @@ const SignUp = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    mobile: "",
   });
+
+  const history = useNavigate(); // Get the navigate function for redirection
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
     try {
       if (
         !formData.firstName ||
@@ -44,6 +47,7 @@ const SignUp = () => {
 
       console.log(response.data);
       alert("User registered successfully");
+      history('/dashboard'); 
     } catch (error) {
       console.error(
         "Signup failed:",
@@ -59,7 +63,7 @@ const SignUp = () => {
         <div className="text">Sign up</div>
         <div className="underline"></div>
       </div>
-      <div className="inputs">
+      <form onSubmit={handleSubmit} className="inputs">
         <div className="input">
           <img src={user_icon} alt="User Icon" />
           <input
@@ -110,20 +114,17 @@ const SignUp = () => {
             onChange={handleChange}
           />
         </div>
-      </div>
-      <div className="text">
-        <p>
-          Already Register? <a href="/">Login</a>
-        </p>
-      </div>
-
-      <div className="submit-container">
-        <button className="submit" onClick={handleSubmit}>
-          Register
-        </button>
-      </div>
-
-      
+        <div className="forgot-password">
+          <p>
+            Already Registered? <a href="/">Login</a>
+          </p>
+        </div>
+        <div className="submit-container">
+          <button type="submit" className="submit">
+            Register
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

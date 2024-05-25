@@ -8,7 +8,7 @@ import axios from "axios";
 const Login = () => {
   const [formDataLogin, setFormDataLogin] = useState({
     email: "",
-    password: "",
+    password: "", 
   });
 
   const history = useNavigate();
@@ -72,7 +72,7 @@ const Login = () => {
       <div className="forgot-password">
         Forgot your password? <span>Click here</span>
       </div>
-      <div className="text">
+      <div className="forgot-password" >
         <p>
           Not a member? <a href="/signup">Register</a>
         </p>
