@@ -1,8 +1,8 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./StyleSL.css";
 import password_icon from "../Assets/password.png";
 import email_icon from "../Assets/email.png";
-
 import axios from "axios";
 
 const Login = () => {
@@ -11,15 +11,14 @@ const Login = () => {
     password: "",
   });
 
+  const history = useNavigate();
+
   const handleChangeLogin = (e) => {
     setFormDataLogin({ ...formDataLogin, [e.target.name]: e.target.value });
   };
 
-  // online https://www.geeksforgeeks.org/spring-security-login-page-with-react/
-
   const handleSubmit = async () => {
     try {
-      // Check for empty fields
       if (!formDataLogin.email || !formDataLogin.password) {
         alert("Please fill in all fields.");
         return;
@@ -29,11 +28,11 @@ const Login = () => {
         "http://localhost:8080/api/v1/auth/authenticate",
         formDataLogin
       );
-      // Handle successful signup
+
       console.log(response.data);
       alert("User Login successfully");
+      history("/dashboard"); // Navigate to the desired route
     } catch (error) {
-      // Handle signup error
       console.error(
         "Login failed:",
         error.response ? error.response.data : error.message
@@ -73,8 +72,15 @@ const Login = () => {
       <div className="forgot-password">
         Forgot your password? <span>Click here</span>
       </div>
+      <div className="text">
+        <p>
+          Not a member? <a href="/signup">Register</a>
+        </p>
+      </div>
       <div className="submit-container">
-        <button className="submit" onClick={handleSubmit}>Login</button>
+        <button className="submit" onClick={handleSubmit}>
+          Login
+        </button>
       </div>
     </div>
   );

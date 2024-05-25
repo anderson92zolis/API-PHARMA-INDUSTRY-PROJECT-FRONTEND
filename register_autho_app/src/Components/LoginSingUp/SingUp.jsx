@@ -111,9 +111,19 @@ const SignUp = () => {
           />
         </div>
       </div>
-      <div className="submit-container">
-        <button className="submit" onClick={handleSubmit}>Register</button>
+      <div className="text">
+        <p>
+          Already Register? <a href="/">Login</a>
+        </p>
       </div>
+
+      <div className="submit-container">
+        <button className="submit" onClick={handleSubmit}>
+          Register
+        </button>
+      </div>
+
+      
     </div>
   );
 };
