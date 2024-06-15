@@ -7,6 +7,7 @@ import "./StyleSL.css";
 
 
 
+
 function WelcomeDashboard({ username }) {
   const history = useNavigate();
 
@@ -37,8 +38,8 @@ function WelcomeDashboard({ username }) {
       <div className="dashboard">
       
       <ul>
-        <li><Link to="/dashboard/option-one">10 ppm Criteria</Link></li>
-
+        <li><Link to="/dashboard/option-one">10 ppm Criteria Tihs is only to test the conexion</Link></li> 
+        <li><Link to="/dashboard/maco">MACO maximum allowable carryover </Link></li>
       </ul>
 
  
