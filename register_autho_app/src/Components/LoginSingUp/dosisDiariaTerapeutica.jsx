@@ -3,30 +3,33 @@ import axios from "axios";
 
 const Ddt = () => {
   const [formDataMaco, setFormDataMaco] = useState({
-    mDDProductA: "",
-    mBSProductB: "",
-    lDDProductB:"" ,
-    sharedSurface:"" ,
-    maco: "",
+    mddProductA: "",
+    mbsProductB: "",
+    lddProductB: "",
+    sharedSurface: "",
     securityFactor: "",
-    message: "",
-
   });
 
-
-  const [mDDProductA, setMDDProductA] = useState("");
-  const [mBSProductB, setMBSProductB] = useState("");
-  const [lDDProductB, setLDDProductB] = useState("");
-  const [sharedSurface, setSharedSurface] = useState("");
-  const [maco, setMaco] = useState("");
-  const [securityFactor, setSecurityFactor] = useState("");
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Convertir los valores a enteros
+    const dataToSend = {
+      mddProductA: parseInt(formDataMaco.mddProductA, 10) || 0,
+      mbsProductB: parseInt(formDataMaco.mbsProductB, 10) || 0,
+      lddProductB: parseInt(formDataMaco.lddProductB, 10) || 0,
+      sharedSurface: parseInt(formDataMaco.sharedSurface, 10) || 0,
+      securityFactor: parseInt(formDataMaco.securityFactor, 10) || 0,
+    };
+    console.log(dataToSend);
+    
     try {
-      // Enviar los datos al backend
-      const response = await axios.post("http://localhost:8080/api/data", formDataMaco);
+      const response = await axios.post("http://localhost:8080/api/v1/maco/dataMaco", dataToSend, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       setMessage("Datos enviados exitosamente al backend.");
     } catch (error) {
       setMessage("Error al enviar los datos al backend.");
@@ -38,36 +41,36 @@ const Ddt = () => {
       <h2>Ingrese los Datos</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="mDDProductA">
+          <label htmlFor="mddProductA">
             Minimum Daily Dose of Product A (mg/kg/day):
           </label>
           <input
             type="text"
-            id="mDDProductA"
-            value={mDDProductA}
-            onChange={(e) => setMDDProductA(e.target.value)}
+            id="mddProductA"
+            value={formDataMaco.mddProductA}
+            onChange={(e) => setFormDataMaco({ ...formDataMaco, mddProductA: e.target.value })}
           />
         </div>
         <div>
-          <label htmlFor="mBSProductB">
+          <label htmlFor="mbsProductB">
             Minimum Batch Size for Product B (mg):
           </label>
           <input
             type="text"
-            id="mBSProductB"
-            value={mBSProductB}
-            onChange={(e) => setMBSProductB(e.target.value)}
+            id="mbsProductB"
+            value={formDataMaco.mbsProductB}
+            onChange={(e) => setFormDataMaco({ ...formDataMaco, mbsProductB: e.target.value })}
           />
         </div>
         <div>
-          <label htmlFor="lDDProductB">
+          <label htmlFor="lddProductB">
             Largest Daily Dose of Product B (mg/kg/day):
           </label>
           <input
             type="text"
-            id="lDDProductB"
-            value={lDDProductB}
-            onChange={(e) => setLDDProductB(e.target.value)}
+            id="lddProductB"
+            value={formDataMaco.lddProductB}
+            onChange={(e) => setFormDataMaco({ ...formDataMaco, lddProductB: e.target.value })}
           />
         </div>
         <div>
@@ -77,19 +80,11 @@ const Ddt = () => {
           <input
             type="text"
             id="sharedSurface"
-            value={sharedSurface}
-            onChange={(e) => setSharedSurface(e.target.value)}
+            value={formDataMaco.sharedSurface}
+            onChange={(e) => setFormDataMaco({ ...formDataMaco, sharedSurface: e.target.value })}
           />
         </div>
-        <div>
-          <label htmlFor="maco">Maximum Allowed Carry Over (mg/cm²):</label>
-          <input
-            type="text"
-            id="maco"
-            value={maco}
-            onChange={(e) => setMaco(e.target.value)}
-          />
-        </div>
+
         <div>
           <label htmlFor="securityFactor">
             Security Factor (0.01 for oral products):
@@ -97,8 +92,8 @@ const Ddt = () => {
           <input
             type="text"
             id="securityFactor"
-            value={securityFactor}
-            onChange={(e) => setSecurityFactor(e.target.value)}
+            value={formDataMaco.securityFactor}
+            onChange={(e) => setFormDataMaco({ ...formDataMaco, securityFactor: e.target.value })}
           />
         </div>
         <button type="submit">Enviar</button>
